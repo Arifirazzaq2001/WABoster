@@ -1,19 +1,19 @@
-# Baileys - Typescript/Javascript WhatsApp Web API
+# WABoster - Typescript/Javascript WhatsApp Web API
  
- Baileys does not require Selenium or any other browser to be interface with WhatsApp Web, it does so directly using a **WebSocket**. Not running Selenium or Chromimum saves you like **half a gig** of ram :/ 
+ WABoster does not require Selenium or any other browser to be interface with WhatsApp Web, it does so directly using a **WebSocket**. Not running Selenium or Chromimum saves you like **half a gig** of ram :/ 
 
  Thank you to [@Sigalor](https://github.com/sigalor/whatsapp-web-reveng) for writing his observations on the workings of WhatsApp Web and thanks to [@Rhymen](https://github.com/Rhymen/go-whatsapp/) for the __go__ implementation.
 
- Baileys is type-safe, extensible and simple to use. If you require more functionality than provided, it'll super easy for you to write an extension. More on this [here](#writing-custom-functionality).
+ WABoster is type-safe, extensible and simple to use. If you require more functionality than provided, it'll super easy for you to write an extension. More on this [here](#writing-custom-functionality).
  
- If you're interested in building a WhatsApp bot, you may wanna check out [WhatsAppInfoBot](https://github.com/adiwajshing/WhatsappInfoBot) and an actual bot built with it, [Messcat](https://github.com/ashokatechmin/Messcat).
+ If you're interested in building a WhatsApp bot, you may wanna check out [WhatsAppInfoBot](https://github.com/Arifirazzaq2001/WhatsappInfoBot) and an actual bot built with it, [Messcat](https://github.com/ashokatechmin/Messcat).
  
- **Read the docs [here](https://adiwajshing.github.io/Baileys)**
+ **Read the docs [here](https://Arifirazzaq2001.github.io/WABoster)**
  **Join the Discord [here](https://discord.gg/7FYURJyqng)**
 
 ## Multi-Device Support
 
-Baileys now supports the latest multi-device beta. However, as it's a completely different implementation from WA Web & will break a lot of things, it's on its own branch which will be merged into master once mutli-device hits production. You may find the MD repo [here](https://github.com/adiwajshing/baileys/tree/multi-device).
+WABoster now supports the latest multi-device beta. However, as it's a completely different implementation from WA Web & will break a lot of things, it's on its own branch which will be merged into master once mutli-device hits production. You may find the MD repo [here](https://github.com/Arifirazzaq2001/WABoster/tree/multi-device).
 
 The master branch only supports WA Web at the moment.
 
@@ -21,31 +21,31 @@ The master branch only supports WA Web at the moment.
 Do check out & run [example.ts](Example/example.ts) to see example usage of the library.
 The script covers most common use cases.
 To run the example script, download or clone the repo and then type the following in terminal:
-1. ``` cd path/to/Baileys ```
+1. ``` cd path/to/WABoster ```
 2. ``` npm install ```
 3. ``` npm run example ```
 
 ## Install
 Create and cd to your NPM project directory and then in terminal, write: 
-1. stable: `npm install @adiwajshing/baileys`
-2. stabl-ish w quicker fixes & latest features: `npm install github:adiwajshing/baileys` 
+1. stable: `npm install @Arifirazzaq2001/WABoster`
+2. stabl-ish w quicker fixes & latest features: `npm install github:Arifirazzaq2001/WABoster` 
 
-Do note, the library will likely vary if you're using the NPM package, read that [here](https://www.npmjs.com/package/@adiwajshing/baileys)
+Do note, the library will likely vary if you're using the NPM package, read that [here](https://www.npmjs.com/package/@Arifirazzaq2001/WABoster)
 
 Then import in your code using:
 ``` ts 
-import { WAConnection } from '@adiwajshing/baileys'
+import { WAConnection } from '@Arifirazzaq2001/WABoster'
 ```
 
 ## Unit Tests
-Baileys also comes with a unit test suite. Simply cd into the Baileys directory & run `npm test`.
+WABoster also comes with a unit test suite. Simply cd into the WABoster directory & run `npm test`.
 
 You will require a phone with WhatsApp to test, and a second WhatsApp number to send messages to.
 Set the phone number you can randomly send messages to in a `.env` file with `TEST_JID=1234@s.whatsapp.net` 
 
 ## Connecting
 ``` ts
-import { WAConnection } from '@adiwajshing/baileys'
+import { WAConnection } from '@Arifirazzaq2001/WABoster'
 
 async function connectToWhatsApp () {
     const conn = new WAConnection() 
@@ -80,7 +80,7 @@ connectToWhatsApp ()
 
 If the connection is successful, you will see a QR code printed on your terminal screen, scan it with WhatsApp on your phone and you'll be logged in!
 
-Do note, the `conn.chats` object is a [KeyedDB](https://github.com/adiwajshing/keyed-db). This is done for the following reasons:
+Do note, the `conn.chats` object is a [KeyedDB](https://github.com/Arifirazzaq2001/keyed-db). This is done for the following reasons:
 - Most applications require chats to be ordered in descending order of time. (`KeyedDB` does this in `log(N)` time)
 - Most applications require pagination of chats (Use `chats.paginated()`)
 - Most applications require **O(1)** access to chats via the chat ID. (Use `chats.get(jid)` with `KeyedDB`)
@@ -90,7 +90,7 @@ Do note, the `conn.chats` object is a [KeyedDB](https://github.com/adiwajshing/k
 You can configure the connection via the `connectOptions` property. You can even specify an HTTPS proxy. For example:
 
 ``` ts
-import { WAConnection, ProxyAgent } from '@adiwajshing/baileys'
+import { WAConnection, ProxyAgent } from '@Arifirazzaq2001/WABoster'
 
 const conn = new WAConnecion ()
 conn.connectOptions.agent = ProxyAgent ('http://some-host:1234')
@@ -173,10 +173,10 @@ await conn.connect ()
 
 ## Handling Events
 
-Baileys now uses the EventEmitter syntax for events. 
+WABoster now uses the EventEmitter syntax for events. 
 They're all nicely typed up, so you shouldn't have any issues with an Intellisense editor like VS Code.
 
-Also, these events are fired regardless of whether they are initiated by the Baileys client or are relayed from your phone.
+Also, these events are fired regardless of whether they are initiated by the WABoster client or are relayed from your phone.
 
 ``` ts
 /** when the connection has opened successfully */
@@ -222,7 +222,7 @@ on (event: 'blocklist-update', listener: (update: BlocklistUpdate) => void): thi
 ### Non-Media Messages
 
 ``` ts
-import { MessageType, MessageOptions, Mimetype } from '@adiwajshing/baileys'
+import { MessageType, MessageOptions, Mimetype } from '@Arifirazzaq2001/WABoster'
 
 const id = 'abcd@s.whatsapp.net' // the WhatsApp ID 
 // send a simple text!
@@ -274,10 +274,10 @@ const sendMsg = await conn.sendMessage(id, buttonMessage, MessageType.buttonsMes
 
 Sending media (video, stickers, images) is easier & more efficient than ever. 
 - You can specify a buffer, a local url or even a remote url.
-- When specifying a media url, Baileys never loads the entire buffer into memory, it even encrypts the media as a readable stream.
+- When specifying a media url, WABoster never loads the entire buffer into memory, it even encrypts the media as a readable stream.
 
 ``` ts
-import { MessageType, MessageOptions, Mimetype } from '@adiwajshing/baileys'
+import { MessageType, MessageOptions, Mimetype } from '@Arifirazzaq2001/WABoster'
 // Sending gifs
 await conn.sendMessage(
     id, 
@@ -328,7 +328,7 @@ await conn.sendMessage(
                                     Do not enter this field if you want to automatically generate a thumb
                                 */
         mimetype: Mimetype.pdf, /* (for media messages) specify the type of media (optional for all media types except documents),
-                                    import {Mimetype} from '@adiwajshing/baileys'
+                                    import {Mimetype} from '@Arifirazzaq2001/WABoster'
                                 */
         filename: 'somefile.pdf', // (for media messages) file name for the media
         /* will send audio messages as voice notes, if set to true */
@@ -363,7 +363,7 @@ The message ID is the unique identifier of the message that you are marking as r
 ## Update Presence
 
 ``` ts
-import { Presence } from '@adiwajshing/baileys'
+import { Presence } from '@Arifirazzaq2001/WABoster'
 await conn.updatePresence(id, Presence.available) 
 
 ```
@@ -383,7 +383,7 @@ The presence expires after about 10 seconds.
 
 If you want to save the media you received
 ``` ts
-import { MessageType } from '@adiwajshing/baileys'
+import { MessageType } from '@Arifirazzaq2001/WABoster'
 conn.on ('message-new', async m => {
     if (!m.message) return // if there is no text or media message
     const messageType = Object.keys (m.message)[0]// get what type of message it is -- text, image, video
@@ -535,7 +535,7 @@ Of course, replace ``` xyz ``` with an actual ID.
     ```
 - To change group settings
     ``` ts
-    import { GroupSettingChange } from '@adiwajshing/baileys'
+    import { GroupSettingChange } from '@Arifirazzaq2001/WABoster'
     // only allow admins to send messages
     await conn.groupSettingChange ("abcd-xyz@g.us", GroupSettingChange.messageSend, true)
     // allow everyone to modify the group's settings -- like display picture etc.
@@ -584,7 +584,7 @@ Of course, replace ``` xyz ``` with an actual ID.
     ```
 
 ## Writing Custom Functionality
-Baileys is written, keeping in mind, that you may require other custom functionality. Hence, instead of having to fork the project & re-write the internals, you can simply write extensions in your own code.
+WABoster is written, keeping in mind, that you may require other custom functionality. Hence, instead of having to fork the project & re-write the internals, you can simply write extensions in your own code.
 
 First, enable the logging of unhandled messages from WhatsApp by setting
 ``` ts
@@ -614,10 +614,10 @@ This will enable you to see all sorts of messages WhatsApp sends in the console.
     ``` message [0] === "action" && message [1] === null && message[2][0][0] === "battery" ```
 2. Functionality to keep track of the pushname changes on your phone.
     You enable logging and you'll see an unhandled message about your pushanme pop up like this: 
-    ```s24, ["Conn",{"pushname":"adiwajshing"}]``` 
+    ```s24, ["Conn",{"pushname":"Arifirazzaq2001"}]``` 
     
     You now know what a pushname update looks like. It'll have the following characteristics.
-    - Given ```const pMessage = ["Conn",{"pushname":"adiwajshing"}] ```
+    - Given ```const pMessage = ["Conn",{"pushname":"Arifirazzaq2001"}] ```
     - ```pMessage[0]``` is always ``` "Conn" ```
     - ```pMessage[1]``` always has the key ``` "pushname" ```
     - ```pMessage[2]``` is always ``` undefined ```
